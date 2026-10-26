@@ -33,19 +33,19 @@ PROCESSED_NEWS_FILE = "processed_news.json"
 # ============================================================
 
 # 当前阶段只使用 DEV.to。
-# 公众号定位以 Web 前端技术为主，重点关注 Vue、TypeScript、
-# JavaScript、React、CSS、Vite、Web 性能等。
+# 公众号定位为嵌入式软件开发，重点关注 MCU、嵌入式 C/C++、RTOS、
+# 驱动开发、嵌入式 Linux、硬件调试及软硬件协同。
 DEV_API_URL = "https://dev.to/api/articles"
 
 DEV_TAGS = [
-    "frontend",
-    "webdev",
-    "javascript",
-    "typescript",
-    "vue",
-    "react",
-    "css",
-    "vite",
+    "embedded",
+    "embeddedlinux",
+    "stm32",
+    "arduino",
+    "c",
+    "cpp",
+    "iot",
+    "linux",
 ]
 
 MAX_NEWS_PER_SOURCE = 20
@@ -60,30 +60,45 @@ MAX_SCREENING_CONTEXT_CHARS = 30000
 # 关键词
 # ============================================================
 
-FRONTEND_KEYWORDS = [
-    "frontend",
-    "front-end",
-    "web development",
-    "web developer",
-    "javascript",
-    "typescript",
-    "react",
-    "vue",
-    "angular",
-    "next.js",
-    "nextjs",
-    "nuxt",
-    "css",
-    "html",
-    "browser",
-    "web performance",
-    "webperf",
-    "webpack",
-    "vite",
-    "node.js",
-    "nodejs",
-    "frontend engineering",
-    "web engineering",
+EMBEDDED_KEYWORDS = [
+    "embedded systems",
+    "embedded software",
+    "embedded development",
+    "embedded c",
+    "embedded c++",
+    "microcontroller",
+    "microcontrollers",
+    "mcu",
+    "stm32",
+    "arm cortex-m",
+    "cortex-m",
+    "bare metal",
+    "firmware",
+    "device driver",
+    "driver development",
+    "freertos",
+    "rtos",
+    "zephyr",
+    "embedded linux",
+    "linux kernel",
+    "uart",
+    "spi",
+    "i2c",
+    "can bus",
+    "dma",
+    "interrupt",
+    "interrupt handling",
+    "arduino",
+    "raspberry pi",
+    "iot",
+    "hardware debugging",
+    "logic analyzer",
+    "oscilloscope",
+    "cross compilation",
+    "linker script",
+    "bootloader",
+    "memory-mapped io",
+    "register-level programming",
 ]
 
 
@@ -347,7 +362,7 @@ def fetch_dev_articles(tag):
 
         if not contains_keyword(
             full_text,
-            FRONTEND_KEYWORDS,
+            EMBEDDED_KEYWORDS,
         ):
             continue
 
@@ -1028,26 +1043,24 @@ def ai_select_news(news_list):
 
 下面是今天从 DEV.to 获取的公开文章。
 
-请从中筛选出一篇最适合“web前端开发之旅”公众号今天发布的文章。
+请从中筛选出一篇最适合“web前端漫游记”公众号当前嵌入式技术方向发布的文章。
 
-公众号主要关注 Web 前端技术，重点包括：
+公众号主要关注嵌入式软件开发，重点包括：
 
-- Vue / Vue 生态
-- TypeScript
-- JavaScript
-- React / Next.js
-- CSS / HTML
-- Vite / Webpack / 前端工程化
-- 浏览器与 Web 性能
-- Node.js 与 Web 开发
-- AI + Web、AI 编程等与前端直接相关的内容
+- STM32、ARM Cortex-M、常见 MCU 与单片机开发
+- 嵌入式 C/C++、内存、指针、编译与链接
+- FreeRTOS、RTOS、任务调度与并发
+- UART、SPI、I²C、CAN、DMA、中断等外设与驱动
+- 嵌入式 Linux、驱动、交叉编译与启动流程
+- 调试工具、示波器、逻辑分析仪与故障定位
+- IoT、软硬件协同，以及直接服务嵌入式开发的 AI 编程工具
 
 要求：
 
 1. 只能根据提供的标题、摘要、来源和链接判断。
 2. 不允许根据自己的知识补充新闻事实。
-3. 优先选择真正的 Web 前端技术内容。
-4. AI 相关内容只有在与 Web 前端开发存在直接关系时才优先考虑。
+3. 优先选择真正面向嵌入式软件开发的技术内容。
+4. AI 相关内容只有在与嵌入式开发、固件或硬件调试存在直接关系时才优先考虑。
 5. 排除 newsletter、weekly roundup、monthly roundup 等汇总文章。
 6. 不选择明显重复的内容。
 7. 不要选择明显只是推广、广告或招聘的内容。
@@ -1549,19 +1562,19 @@ def ai_generate_article(news):
     }
 
     prompt = f"""
-你是一名中文 Web 前端技术公众号编辑。
+你是一名中文嵌入式软件技术公众号编辑。
 
 请根据下面提供的唯一一篇 DEV.to 英文技术文章原文，
 将它忠实地重构成一篇完整的中文微信公众号技术文章。
 
 公众号名称：
 
-web前端开发之旅
+web前端漫游记（临时名称）
 
 这不是简单的新闻摘要。
 
 你需要把原文真正有价值的技术内容提取出来，
-让中文 Web 前端开发者能够理解文章讲了什么、
+让中文嵌入式软件开发者能够理解文章讲了什么、
 为什么值得关注，以及具体怎么做。
 
 ============================================================
@@ -1584,7 +1597,7 @@ web前端开发之旅
 二、最重要：不要把原文的技术价值删掉
 ============================================================
 
-这是一篇 Web 前端技术文章。
+这是一篇嵌入式软件技术文章。
 
 如果原文中出现以下内容，它们都属于重要信息：
 
@@ -1593,11 +1606,13 @@ web前端开发之旅
 - 代码示例
 - API 调用示例
 - 配置文件
-- JavaScript / TypeScript 示例
-- Vue / React 示例
-- HTML / CSS 示例
-- Vite / Webpack 配置
-- 浏览器 API 使用方式
+- C / C++ 示例
+- STM32 / MCU 示例
+- 寄存器、外设与驱动代码
+- FreeRTOS / RTOS 任务示例
+- UART / SPI / I²C / CAN 等通信示例
+- 嵌入式 Linux、交叉编译与启动配置
+- 调试日志、寄存器值与硬件测试方式
 - 前后对比代码
 - 错误代码与修复代码
 - 性能测试或 benchmark
@@ -1673,7 +1688,7 @@ web前端开发之旅
 你只能使用下面提供的信息，
 尤其是 source_content 中的原文内容。
 
-不要把你自己的 Web 前端知识当成原文事实。
+不要把你自己的嵌入式知识当成原文事实。
 
 禁止：
 
@@ -1719,7 +1734,7 @@ web前端开发之旅
 - 清晰
 - 技术感
 - 有解释性
-- 适合 Web 前端开发者阅读
+- 适合嵌入式软件开发者阅读
 - 不要明显 AI 腔
 - 不要写成新闻列表
 - 不要堆砌新闻事实
@@ -2083,7 +2098,7 @@ def filter_news(news_list):
         if not (
             contains_keyword(
                 text,
-                FRONTEND_KEYWORDS,
+                EMBEDDED_KEYWORDS,
             )
             or contains_keyword(
                 text,
@@ -2448,7 +2463,7 @@ def main():
 
     print("")
     print("=" * 70)
-    print("0元 Web 前端技术公众号自动化")
+    print("0元嵌入式软件技术公众号自动化")
     print("=" * 70)
 
     # --------------------------------------------------------
