@@ -905,8 +905,8 @@ def render_code_block(code_block, access_token):
 # 顶部导语框
 #
 # 固定模板：
-# 珊瑚红边框与右下角珊瑚红三角
-# 浅粉色背景
+# 深青蓝边框与右下角深青蓝三角
+# 浅青蓝背景
 # ============================================================
 
 def render_lead(lead):
@@ -932,8 +932,8 @@ def render_lead(lead):
 <section style="
     margin:10px auto 24px auto;
     padding:10px 15px;
-    background-color:#fff9f9;
-    border:1px solid #ef7060;
+    background-color:#f3f8fa;
+    border:1px solid #167d8d;
     box-sizing:border-box;
     position:relative;
     overflow:hidden;
@@ -973,7 +973,7 @@ def render_lead(lead):
         bottom:-1px;
         width:0;
         height:0;
-        border-bottom:18px solid #ef7060;
+        border-bottom:18px solid #167d8d;
         border-left:18px solid transparent;
         line-height:0;
         font-size:0;
@@ -1005,8 +1005,8 @@ def render_section_heading(
     label_text = heading
 
     return f"""
-<h2 style="margin:30px 0 15px 0;padding:0;border:0;border-bottom:2px solid #ef7060;text-align:left;font-size:1.3em;font-weight:bold;line-height:1.5;color:#000000;background:#ffffff;word-break:break-word;overflow-wrap:break-word;">
-  <span style="display:inline-block;margin:0 3px 0 0;padding:3px 10px 1px;background:#ef7060;color:#ffffff;font-size:1em;font-weight:bold;line-height:1.5;border-top-left-radius:3px;border-top-right-radius:3px;white-space:normal;word-break:break-word;overflow-wrap:break-word;">
+<h2 style="margin:30px 0 15px 0;padding:0;border:0;border-bottom:2px solid #167d8d;text-align:left;font-size:1.3em;font-weight:bold;line-height:1.5;color:#000000;background:#ffffff;word-break:break-word;overflow-wrap:break-word;">
+  <span style="display:inline-block;margin:0 3px 0 0;padding:3px 10px 1px;background:#167d8d;color:#ffffff;font-size:1em;font-weight:bold;line-height:1.5;border-top-left-radius:3px;border-top-right-radius:3px;white-space:normal;word-break:break-word;overflow-wrap:break-word;">
     {label_text}
   </span>
 </h2>
@@ -1069,7 +1069,7 @@ def render_highlight(text):
 <section style="
     margin:16px 0;
     padding:11px 14px;
-    background-color:#f8fbff;
+    background-color:#f1f7f8;
     box-sizing:border-box;
     width:100%;
 ">
@@ -1820,7 +1820,7 @@ def add_draft(
             {
                 "title": title,
 
-                "author": "web前端开发之旅",
+                "author": os.environ.get("WECHAT_AUTHOR", "web前端漫游记"),
 
                 "digest": (
                     article.get(
