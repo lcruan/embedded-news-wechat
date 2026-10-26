@@ -1,17 +1,14 @@
-name: AI News Daily
+name: Embedded News Manual Test
 
 on:
-  schedule:
-    # 每天北京时间 08:00
-    - cron: "0 0 * * *"
-
+  # 初期仅允许手动触发；验证稳定后再单独启用定时任务。
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: ai-news-daily
+  group: embedded-news-daily
   cancel-in-progress: false
 
 jobs:
@@ -31,7 +28,7 @@ jobs:
           set -euo pipefail
 
           # 历史文件保存在工作区之外，避免每次 checkout 覆盖。
-          PERSISTENT_DATA_DIR="/home/github-runner/data/ai-news-wechat"
+          PERSISTENT_DATA_DIR="/home/github-runner/data/embedded-news-wechat"
           PERSISTENT_HISTORY_FILE="$PERSISTENT_DATA_DIR/processed_news.json"
           WORKSPACE_HISTORY_FILE="$GITHUB_WORKSPACE/processed_news.json"
 
@@ -116,6 +113,7 @@ jobs:
       - name: Run AI news filter
         env:
           SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
+          WECHAT_AUTHOR: web前端漫游记
         run: |
           python3 news_fetcher.py
 
@@ -123,5 +121,6 @@ jobs:
         env:
           WECHAT_APP_ID: ${{ secrets.WECHAT_APP_ID }}
           WECHAT_APP_SECRET: ${{ secrets.WECHAT_APP_SECRET }}
+          WECHAT_AUTHOR: web前端漫游记
         run: |
           python3 wechat_test.py
